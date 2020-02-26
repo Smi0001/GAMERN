@@ -1,0 +1,15 @@
+{
+  "name": "gamern",
+  "version": "1.0.0",
+  "description": "Full stack implementation of GAMERN (GraphiQL Apollo MongoDB ExpressJS ReactJS NodeJS)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Smi0001/GAMERN.git"
+  },
+  "author": "Smi0001",
+  "license": "ISC"
+}

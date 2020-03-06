@@ -48,19 +48,13 @@ To search images, internet is required
 
 
 ### Reference
- - React
+`React`
+ - [MDB React ![MDB React](https://mdbootstrap.com/img/Marketing/general/logo/small/mdb-react.png)](https://mdbootstrap.com/docs/react)
 
-MDB React https://mdbootstrap.com/docs/react/
+`Image Editor`
+- [Github Code](https://github.com/nhn/tui.image-editor/blob/v3.8.0/src/js/imageEditor.js) https://github.com/nhn/tui.image-editor
+- [API Dox![Documentation](https://user-images.githubusercontent.com/35218826/40895380-0b9f4cd6-67ea-11e8-982f-18121daa3a04.png)](https://nhn.github.io/tui.image-editor/latest/ImageEditor)
 
- - Image Editor
-
-code: https://github.com/nhn/tui.image-editor/blob/v3.8.0/src/js/imageEditor.js
-
-API Dox: https://nhn.github.io/tui.image-editor/latest/ImageEditor
-
-
-- GraphQl
-
-github Code: https://github.com/iamshaunjp/graphql-playlist
-
-YouTube Tutorial: https://www.youtube.com/playlist?list=PL4cUxeGkcC9iK6Qhn-QLcXCXPQUov1U7f
+`GraphQl`
+- [Github Code](https://github.com/iamshaunjp/graphql-playlist) https://github.com/iamshaunjp/graphql-playlist
+- [Tutorial ![YouTube](https://s.ytimg.com/yts/img/favicon_48-vflVjB_Qk.png)](https://www.youtube.com/playlist?list=PL4cUxeGkcC9iK6Qhn-QLcXCXPQUov1U7f)

@@ -53,8 +53,11 @@ To search images, internet is required
 
 `Image Editor`
 - [Github Code](https://github.com/nhn/tui.image-editor/blob/v3.8.0/src/js/imageEditor.js) https://github.com/nhn/tui.image-editor
-- [API Dox![Documentation](https://user-images.githubusercontent.com/35218826/40895380-0b9f4cd6-67ea-11e8-982f-18121daa3a04.png)](https://nhn.github.io/tui.image-editor/latest/ImageEditor)
+- [API Dox ![Documentation](https://user-images.githubusercontent.com/35218826/40895380-0b9f4cd6-67ea-11e8-982f-18121daa3a04.png)](https://nhn.github.io/tui.image-editor/latest/ImageEditor)
 
 `GraphQl`
 - [Github Code](https://github.com/iamshaunjp/graphql-playlist) https://github.com/iamshaunjp/graphql-playlist
-- [Tutorial ![YouTube](https://s.ytimg.com/yts/img/favicon_48-vflVjB_Qk.png)](https://www.youtube.com/playlist?list=PL4cUxeGkcC9iK6Qhn-QLcXCXPQUov1U7f)
+- [Tutorial Playlist ![YouTube](https://s.ytimg.com/yts/img/favicon_48-vflVjB_Qk.png)](https://www.youtube.com/playlist?list=PL4cUxeGkcC9iK6Qhn-QLcXCXPQUov1U7f)
+
+`Google Image Search plugin`
+- [image-search-google ![npmjs](https://static.npmjs.com/b0f1a8318363185cc2ea6a40ac23eeb2.png)](https://www.npmjs.com/package/image-search-google)

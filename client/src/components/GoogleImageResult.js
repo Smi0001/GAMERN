@@ -86,7 +86,7 @@ class GoogleImageResult extends Component {
                 <MDBContainer className="p-0">
                     <MDBRow>
                         <MDBCol xl="12" lg="12" md="12">
-                            <div class="pos-rel">
+                            <div className="pos-rel">
                                 <label className="powered-text">Powered by Google Search</label>
                             </div>
                             <MDBInput label="Search with meme tags" id="searchBox" onKeyDown={this.handleSearch.bind(this)}

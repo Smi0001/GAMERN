@@ -7,7 +7,6 @@ const initialState = {
     imageListloading: false,
     isImageLoaded: false,
     useImageloading: false,
-    loadFirstEditor: true, // used to toggle between two editor components
     selectedImageURL: null,
     openAdditionalImageAlertModal: false,
     canvasSize: {},
@@ -75,28 +74,8 @@ const reducerState = (prevState = {}, action) => {
                 selectedImageURL,
                 useImageloading: false,
                 isImageLoaded: true,
-                loadFirstEditor: !prevState.loadFirstEditor,
             }
         }
-
-        case actionType.TOGGLE_EDITOR: {
-            return  {
-                ...prevState,
-                selectedImageURL: null,
-                useImageloading: false,
-                isImageLoaded: false,
-                loadFirstEditor: !prevState.loadFirstEditor,
-            }
-        }
-
-        // case actionType.UNLOAD_BROWSED_IMAGE_URL: {
-        //     return {
-        //         ...prevState,
-        //         selectedImageURL: '',
-        //         isImageLoaded: false,
-        //         loadFirstEditor: !prevState.loadFirstEditor,
-        //     }
-        // }
 
         case actionType.SET_IS_IMAGE_LOADED: {
             let {

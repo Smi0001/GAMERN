@@ -19,22 +19,21 @@ const client = new ApolloClient({
   uri: SETTINGS.graphqlURL
 })
 
-
 class App extends Component {
   
-  render() {
-    return (
-      <ApolloProvider client={client}>
-        <div className="App">
-            <h2 className="text-center"> Meme Team</h2>
-            <GoogleImageResult />
-            <MemeEditor />
-            {/* <SpeechList /> */}
-            {/* <AddSpeech /> */}
-        </div>
-      </ApolloProvider>
-    );
-  }
+	render() {
+		return (
+			<ApolloProvider client={client}>
+				<div className="App">
+					<h2 className="text-center"> Meme Team</h2>
+					<GoogleImageResult />
+					<MemeEditor />
+					{/* <SpeechList /> */}
+					{/* <AddSpeech /> */}
+				</div>
+			</ApolloProvider>
+		);
+	}
 }
 
 export default App;

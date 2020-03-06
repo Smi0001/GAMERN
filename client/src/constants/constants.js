@@ -1,51 +1,32 @@
+const icona = require('tui-image-editor/dist/svg/icon-a.svg')
+const iconb = require('tui-image-editor/dist/svg/icon-b.svg')
+const iconc = require('tui-image-editor/dist/svg/icon-c.svg')
+const icond = require('tui-image-editor/dist/svg/icon-d.svg')
 
-const X_TEXT = 'X'
-const O_TEXT = 'O'
-const WINNER_CLASS = 'winner-box'
-const DEFAULT_POINTER_CLASS = 'cur-def'
-const GAME_TIC_TAC_TOE = 'GAME_TIC_TAC_TOE'
-const PLAYER_X = 'playerX'
-const PLAYER_O = 'playerO'
-const SCORE_X = 'scoreX'
-const SCORE_O = 'scoreO'
-const WINNER_TEXT = 'Winner: '
-const CURRENT_PLAYER_TEXT = 'Current Player: '
-const MATCH_DRAW_TEXT = 'Match is draw!'
-const UPCOMING_FEATURE_TEXT = 'Coming Soon'
-export const matrix = [
-    null, null, null,
-    null, null, null,
-    null, null, null,
-]
-export const winnerBoxes = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-]
-export const TEXT_CONSTANTS = {
-    X_TEXT,
-    O_TEXT,
-    WINNER_CLASS,
-    DEFAULT_POINTER_CLASS,
-    GAME_TIC_TAC_TOE,
-    PLAYER_X,
-    PLAYER_O,
-    SCORE_X,
-    SCORE_O,
-    WINNER_TEXT,
-    CURRENT_PLAYER_TEXT,
-    MATCH_DRAW_TEXT,
-    UPCOMING_FEATURE_TEXT,
+export const imageEditorConfig = {
+    myTheme: {
+        'menu.backgroundColor': 'white',
+        'common.backgroundColor': '#151515',
+        'downloadButton.backgroundColor': 'white',
+        'downloadButton.borderColor': 'white',
+        'downloadButton.color': 'black',
+        'menu.normalIcon.path': icond,
+        'menu.activeIcon.path': iconb,
+        'menu.disabledIcon.path': icona,
+        'menu.hoverIcon.path': iconc,
+    },
+    imageDefaultName: 'created-meme-image',
+    menuFeatures: ['crop', 'flip', 'rotate', 'draw', 'shape', 'text', 'filter'],
+    initMenu: '',
+    uiSize: {
+        height: `calc(100vh - 160px)`,
+    },
+    menuBarPosition: 'bottom',
+    cssMaxHeight: window.innerHeight,
+    cssMaxWidth: window.innerWidth,
+    selectionStyle: {
+        cornerSize: 20,
+        rotatingPointOffset: 70,
+    },
+    usageStatistics: false,
 }
-export const UPCOMING_FEATURE = [
-    'Play Against CPU',
-    'Share your score on social platforms',
-    'Social platform Login',
-    'Play with social platform friends',
-    'Mobile App would be available soon',
-]

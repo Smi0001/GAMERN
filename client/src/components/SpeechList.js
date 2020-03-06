@@ -27,7 +27,7 @@ class SpeechList extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container-fluid speech-list-container">
                 {this.displaySpeechList()}
             </div>
         );

@@ -129,7 +129,7 @@ class AddSpeech extends Component {
     render() {
         const { addNewCharacter, disableSubmit } = this.state
         return (
-            <div className="add-speech-container container">
+            <div className="add-speech-container container-fluid ">
                 <form id="add-speech-form" onSubmit={this.submitForm.bind(this)}>
                     { !addNewCharacter &&
                         <div className="field">

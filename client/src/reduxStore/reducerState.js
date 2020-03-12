@@ -1,17 +1,26 @@
 import * as actionType from '../actions/ActionType';
 import APIUtils from '../utils/api-utils'
+import { EMPTY_STRING, INTENTIONAL_NULL_VALUE } from '../constants/constants';
 
 const initialState = {
-    searchString: '',
+    searchString: EMPTY_STRING,
     imageList: [],
     imageListloading: false,
-    isImageLoaded: false,
+    isBaseImageLoaded: false,
+    openImageSizeModal: false,
     useImageloading: false,
-    selectedImageURL: null,
+    xtraImageloading: false,
+    showXtraEditor: false,
+    selectedImageURL: INTENTIONAL_NULL_VALUE,
+    xtraImageURL: INTENTIONAL_NULL_VALUE,
     openAdditionalImageAlertModal: false,
-    canvasSize: {},
-    largestImageSize: {},
-    selectedImageId: null,
+    openModalName: INTENTIONAL_NULL_VALUE,
+    imageSize: INTENTIONAL_NULL_VALUE,
+    xtraImageSize: {},
+    baseImageSize: {},
+    addMoreImageAlertStates: {},
+    imageLoadModalStates: {},
+    selectedImageId: INTENTIONAL_NULL_VALUE,
     resultCount: 0,
     options: {
         page: 1,
@@ -55,55 +64,72 @@ const reducerState = (prevState = {}, action) => {
             let {
                 imageThumbnail,
                 imageUrl,
-                imageId
+                imageId,
+                xtraImage
             } = action.payload
-            APIUtils.checkImageExists(imageThumbnail, imageUrl)
+            APIUtils.checkImageExists(imageThumbnail, imageUrl, xtraImage)
+            let imageStateObject = {
+                selectedImageId: imageId,
+            }
+            if (xtraImage) {
+                imageStateObject.xtraImageloading = true
+                imageStateObject.showXtraEditor = true
+            } else {
+                imageStateObject.useImageloading = true
+                imageStateObject.showXtraEditor = false
+            }
             return  {
                 ...prevState,
-                useImageloading: true,
-                selectedImageId: imageId,
+                ...imageStateObject,
             }
         }
 
         case actionType.LOAD_SELECTED_IMAGE_URL: {
             let {
                 selectedImageURL,
+                xtraImage
             } = action.payload
+            const imageStateObject = {}
+            if (xtraImage) {
+                imageStateObject.xtraImageURL = selectedImageURL
+                imageStateObject.xtraImageloading = false
+                imageStateObject.showXtraEditor = true
+            } else {
+                imageStateObject.selectedImageURL = selectedImageURL
+                imageStateObject.useImageloading = false
+                imageStateObject.isBaseImageLoaded = true
+                imageStateObject.showXtraEditor = false
+            }
             return  {
                 ...prevState,
-                selectedImageURL,
-                useImageloading: false,
-                isImageLoaded: true,
+                ...imageStateObject,
             }
         }
 
         case actionType.SET_IS_IMAGE_LOADED: {
             let {
-                isImageLoaded
+                isBaseImageLoaded,
             } = action.payload
             return {
                 ...prevState,
-                isImageLoaded
+                isBaseImageLoaded,
             }
         }
 
-        case actionType.OPEN_IMAGE_ALERT_MODAL: {
-            let {
-                openAdditionalImageAlertModal,
-                canvasSize,
-                largestImageSize
-            } = action.payload
-            const canvasObject = {}
-            if (canvasSize) {
-                canvasObject.canvasSize = canvasSize
-            }
-            if (largestImageSize) {
-                canvasObject.largestImageSize = largestImageSize
-            }
+        case actionType.OPEN_MODAL: {
             return {
                 ...prevState,
-                openAdditionalImageAlertModal,
-                ...canvasObject
+                ...action.payload,
+            }
+        }
+
+        case actionType.TOGGLE_XTRA_EDITOR: {
+            let {
+                showXtraEditor
+            } = action.payload
+            return {
+                ...prevState,
+                showXtraEditor,
             }
         }
 

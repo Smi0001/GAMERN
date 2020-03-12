@@ -1,4 +1,5 @@
 import * as actionType from './ActionType';
+import { INTENTIONAL_NULL_VALUE } from '../constants/constants';
 
 export const AppActions = {
 
@@ -7,7 +8,7 @@ export const AppActions = {
 			type: actionType.GET_IMAGE_LIST,
 			payload: {
 				searchString,
-				options
+				options,
 			}
 		}
 	},
@@ -16,47 +17,60 @@ export const AppActions = {
 		return {
 			type: actionType.SET_IMAGE_LIST,
 			payload: {
-				imageList
+				imageList,
 			}
 		}
 	},
 
-	useImage: (imageThumbnail, imageUrl, imageId) => {
+	useImage: (imageThumbnail, imageUrl, imageId, xtraImage) => {
 		return {
 			type: actionType.USE_IMAGE,
 			payload: {
 				imageThumbnail,
 				imageUrl,
-				imageId
+				imageId,
+				xtraImage,
 			}
 		}
 	},
 
-	loadSelectedImageURL: (selectedImageURL) => {
+	loadSelectedImageURL: (selectedImageURL, xtraImage) => {
 		return {
 			type: actionType.LOAD_SELECTED_IMAGE_URL,
 			payload: {
-				selectedImageURL
+				selectedImageURL,
+				xtraImage,
 			}
 		}
 	},
 
-	setIsImageLoadStatus: (isImageLoaded) => {
+	setIsBaseImageLoadStatus: (isBaseImageLoaded) => {
 		return {
 			type: actionType.SET_IS_IMAGE_LOADED,
 			payload: {
-				isImageLoaded
+				isBaseImageLoaded,
 			}
 		}
 	},
 
-	openImageAlertModal: ({openAdditionalImageAlertModal, canvasSize, largestImageSize}) => {
+	openModal: (
+		openModalName,
+		modalStateObjects,
+	) => {
 		return {
-			type: actionType.OPEN_IMAGE_ALERT_MODAL,
+			type: actionType.OPEN_MODAL,
 			payload: {
-				openAdditionalImageAlertModal,
-				canvasSize,
-				largestImageSize
+				openModalName: openModalName || INTENTIONAL_NULL_VALUE,
+				...modalStateObjects || {},
+			}
+		}
+	},
+
+	showHideXtraEditor: (showXtraEditor) => {
+		return {
+			type: actionType.TOGGLE_XTRA_EDITOR,
+			payload: {
+				showXtraEditor,
 			}
 		}
 	},

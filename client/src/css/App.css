@@ -57,6 +57,18 @@ code {
 .text-color-white {
   color: white;
 }
+.text-color-red {
+  color: red;
+}
+.text-color-green {
+  color: green;
+}
+.text-color-yellow {
+  color: yellow;
+}
+.text-color-indigo {
+  color: #3F54B5;
+}
 .m-l-10 {
   margin-left: 10px;
 }
@@ -77,6 +89,10 @@ code {
 }
 .cursor-pointer {
   cursor: pointer;
+}
+.disabled {
+  color: #ccc !important;
+  cursor: default !important;
 }
 .text-capitalize {
   text-transform: capitalize;
@@ -295,26 +311,46 @@ form textarea {
 }
 .actions>.hover-text {
   color: white;
+  font-size: 14px;
+  text-align: left;
   top: 35%;
   position: relative;
+  line-height: 1.5rem;
+  padding-left: 10px;
 }
 .actions:active>.hover-text {
   color: #3f51b5;
 }
 .hover-text:hover {
-  color: blue;
+  color: #007bff;
+  background-color: white;
 }
 
 
 /* media queries for small screens */
 @media only screen and (max-width: 600px) {
+  #searchResults {
+    overflow: auto;
+    max-height: 420px;
+  }
   .flex-container .image-div {
     width: 100% !important;
-    margin: 10px 15px;
-    padding: 0 10px;
+    margin: 10px 5px;
+    padding: 0;
     text-align: left;
   }
+  .image-div img {
+    max-width: 150px
+  }
+  .image-div>.actions {
+    display: block;
+    right: 0;
+    top: 0;
+    width: calc(100% - 160px);
+  }
   .actions>.hover-text {
-    padding: 0 0 0 35px;
+    line-height: 1.2;
+    padding: 10px 5px;
+    top: 0;
   }
 }

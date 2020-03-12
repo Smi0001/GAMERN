@@ -2,7 +2,12 @@ import React from 'react'
 import ImageEditor from "@toast-ui/react-image-editor";
 import store from '../reduxStore';
 import { AppActions } from '../actions';
-import { imageEditorConfig } from '../constants/constants';
+import {
+    imageEditorConfig, MODALS, INTENTIONAL_NULL_VALUE, XTRA,
+    // MODALS,
+    // INTENTIONAL_NULL_VALUE
+} from '../constants/constants';
+import UTILS from '../utils/common-utils';
 const download = require("downloadjs")
 
 const {
@@ -16,9 +21,10 @@ const {
     cssMaxWidth,
     selectionStyle,
     usageStatistics,
+    imageSizeAllowed,
 } = imageEditorConfig
 
-class MemeEditorWrapper extends React.Component {
+class ImageEditorWrapper extends React.Component {
 
     constructor(props) {
         super(props)
@@ -44,14 +50,33 @@ class MemeEditorWrapper extends React.Component {
             )
         }
     }
+
+    isImageValidInSize(file) {
+        return file.size <= imageSizeAllowed
+    }
     imageLoadWrapper = file => {
-        let fileSelected = !!file
-        if (fileSelected) {
-            this.state.originalLoadCode(file)
+        let isBaseImageLoaded = !!file
+        if (isBaseImageLoaded) {
+            if (this.isImageValidInSize(file)) {
+                if (this.props.componentId === XTRA) {
+                    UTILS.scrollToHiddenElementById('xtra-image')
+                } else {
+                    UTILS.scrollToHiddenElementById('cream-your-meme')
+                }
+                this.state.originalLoadCode(file)
+            } else {
+                store.dispatch(
+                    AppActions.openModal(
+                        MODALS.imageLoadFail,
+                        INTENTIONAL_NULL_VALUE,
+                        { imageSize: file.size + ' Bytes' }
+                    )
+                )
+            }
         } else { // file already selected
-            fileSelected = !!this.state.imageEditorInst.getImageName()
+            isBaseImageLoaded = !!this.state.imageEditorInst.getImageName()
         }
-        store.dispatch(AppActions.setIsImageLoadStatus(fileSelected))
+        store.dispatch(AppActions.setIsBaseImageLoadStatus(isBaseImageLoaded))
     }
 
     bindImageLoadWrapperFn() {
@@ -68,39 +93,15 @@ class MemeEditorWrapper extends React.Component {
         document.querySelector('input.tui-image-editor-load-btn').click()
     }
 
-    addMoreImage(event) {
-        const files = event.target.files
-        if (files.length > 0) {
-            const { imageEditorInst } = this.state
-            imageEditorInst.addImageObject(URL.createObjectURL(event.target.files[0]))
-            .then(additionalImage => {
-                var canvasSize = imageEditorInst.getCanvasSize();
-                var largestImageSize = this.state.largestImageSize
-                if (!largestImageSize || largestImageSize.width < additionalImage.width) {
-                    largestImageSize = additionalImage
-                }
-                if (largestImageSize.width > canvasSize.width) {
-                    store.dispatch(
-                        AppActions.openImageAlertModal({
-                            openAdditionalImageAlertModal: true,
-                            canvasSize,
-                            largestImageSize,
-                        })
-                    )
-                }
-            });
-        }
-    }
-
     saveImageToDisk() {
         const { imageEditorInst } = this.state
         const data = imageEditorInst.toDataURL()
         if (data) {
-        const mimeType = data.split(";")[0];
-        const extension = data.split(";")[0].split("/")[1];
-        download(data, `image.${extension}`, mimeType);
-        // send the data to DB it can be restored and used as source for img tag
-        //sessionStorage.setItem('image', data)
+            const mimeType = data.split(";")[0];
+            const extension = data.split(";")[0].split("/")[1];
+            download(data, `image.${extension}`, mimeType);
+            // send the data to DB it can be restored and used as source for img tag
+            //sessionStorage.setItem('image', data)
         }
     }
     render() {
@@ -130,4 +131,4 @@ class MemeEditorWrapper extends React.Component {
     }
 }
 
-export default MemeEditorWrapper
+export default ImageEditorWrapper

@@ -15,7 +15,7 @@ export const imageEditorConfig = {
         'menu.disabledIcon.path': icona,
         'menu.hoverIcon.path': iconc,
     },
-    imageDefaultName: 'created-meme-image',
+    imageDefaultName: 'image',
     menuFeatures: ['crop', 'flip', 'rotate', 'draw', 'shape', 'text', 'filter'],
     initMenu: '',
     uiSize: {
@@ -29,4 +29,16 @@ export const imageEditorConfig = {
         rotatingPointOffset: 70,
     },
     usageStatistics: false,
+    imageSizeAllowed: (6 * 1000000), // 6MB
+}
+
+export const INTENTIONAL_NULL_VALUE = null // unintentional vallue is set as undefined
+export const EMPTY_STRING = ''
+export const BASE = 'base'
+export const XTRA = 'additional'
+
+export const MODALS = {
+    addMoreImageAlert: 'addMoreImageAlert',
+    imageLoadFail: 'imageLoadFail',
+    addImageEditor: 'addImageEditor',
 }

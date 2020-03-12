@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { AppActions } from '../actions';
 import store from '../reduxStore'
+import { MODALS, INTENTIONAL_NULL_VALUE } from '../constants/constants'
 
 const baseUrl = 'http://localhost:4000/'
 
@@ -16,7 +17,6 @@ const APIUtils = {
             .replace('optionsObject', JSON.stringify(options))
         axios.get(url)
         .then(response => {
-            console.log(response)
             store.dispatch(
                 AppActions.setImageList(response.data)
             )
@@ -24,20 +24,32 @@ const APIUtils = {
         .catch(error => console.log(error))
     },
 
-    checkImageExists: (imageThumbnail, imageUrl) => {
-        let url = imageUrl
-        axios.get(url)
-        .then(response => {
-            // console.log(response)
+    // first checks for imageURL(higher dimension)
+    // if fails then checks for imageThumbnail(smaller dimension)
+    // if still fails displays alert modal
+    checkImageExists: function(imageThumbnail, imageURL, xtraImage) {
+        const _this = this
+        axios.get(imageURL)
+        .then(() => {
             store.dispatch(
-                AppActions.loadSelectedImageURL(imageUrl) // higher dimension
+                AppActions.loadSelectedImageURL(imageURL, xtraImage)
             )
         })
         .catch(error => {
-            console.log('could not fetch imageUrl', error)
-            store.dispatch(
-                AppActions.loadSelectedImageURL(imageThumbnail) // smaller dimension
-            )
+            console.log('could not fetch imageURL', error)
+            imageThumbnail
+            ?
+                _this.checkImageExists(INTENTIONAL_NULL_VALUE, imageThumbnail, xtraImage)
+            :
+                store.dispatch(
+                    AppActions.openModal(
+                        MODALS.imageLoadFail,
+                        {
+                            xtraImageloading: false,
+                            useImageloading: false
+                        }
+                    )
+                )
         })
     },
 

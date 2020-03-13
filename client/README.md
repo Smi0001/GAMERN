@@ -68,6 +68,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
 <!-- pending: testing & logging for UI API hits/activities and error logging -->
-
-### License
-Every tool of this product is open source with their [license](https://www.npmjs.com/package/image-search-google#license)

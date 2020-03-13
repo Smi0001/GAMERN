@@ -3,15 +3,15 @@ import ImageEditor from "@toast-ui/react-image-editor";
 import store from '../reduxStore';
 import { AppActions } from '../actions';
 import {
-    imageEditorConfig, MODALS, INTENTIONAL_NULL_VALUE, XTRA,
-    // MODALS,
-    // INTENTIONAL_NULL_VALUE
+    imageEditorConfig,
+    MODALS,
+    XTRA,
 } from '../constants/constants';
 import UTILS from '../utils/common-utils';
 const download = require("downloadjs")
 
 const {
-    myTheme,
+    defaultTheme,
     imageDefaultName,
     menuFeatures,
     initMenu,
@@ -31,6 +31,8 @@ class ImageEditorWrapper extends React.Component {
         this.imageEditor = React.createRef()
         this.state = {
             selectedImageURL: props.selectedImageURL,
+            myTheme: props.myTheme,
+            componentId: props.componentId,
         }
     }
 
@@ -68,8 +70,7 @@ class ImageEditorWrapper extends React.Component {
                 store.dispatch(
                     AppActions.openModal(
                         MODALS.imageLoadFail,
-                        INTENTIONAL_NULL_VALUE,
-                        { imageSize: file.size + ' Bytes' }
+                        { imageSize: file.size }
                     )
                 )
             }
@@ -105,13 +106,14 @@ class ImageEditorWrapper extends React.Component {
         }
     }
     render() {
+        const { myTheme, componentId } = this.state
         const imageEditorProps = {
             includeUI: {
                 loadImage: {
                     path: this.state.selectedImageURL,
                     name: imageDefaultName,
                 },
-                theme: myTheme,
+                theme: myTheme ? myTheme : defaultTheme,
                 menu: menuFeatures,
                 initMenu,
                 uiSize,
@@ -124,7 +126,7 @@ class ImageEditorWrapper extends React.Component {
             ref: this.imageEditor,
         }
         return (
-            <div id="tui-image-editor">
+            <div id={"tui-image-editor-" + componentId}>
                 <ImageEditor {...imageEditorProps} />
             </div>
         )

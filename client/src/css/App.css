@@ -38,66 +38,6 @@ code {
     transform: rotate(360deg);
   }
 }
-/* self descriptive css */
-.hidden {
-  display: none;
-}
-.text-center {
-  text-align: center;
-}
-.text-left {
-  text-align: center;
-}
-.text-right {
-  text-align: center;
-}
-.p-0 {
-  padding: 0;
-}
-.text-color-white {
-  color: white;
-}
-.text-color-red {
-  color: red;
-}
-.text-color-green {
-  color: green;
-}
-.text-color-yellow {
-  color: yellow;
-}
-.text-color-indigo {
-  color: #3F54B5;
-}
-.m-l-10 {
-  margin-left: 10px;
-}
-.m-b-25 {
-  margin-bottom: 25px;
-}
-.flip-horizontally {
-  transform: scaleX(-1);
-}
-.pos-rel {
-  position: relative;
-}
-.row {
-  display: flex;
-}
-.block {
-  display: block;
-}
-.cursor-pointer {
-  cursor: pointer;
-}
-.disabled {
-  color: #ccc !important;
-  cursor: default !important;
-}
-.text-capitalize {
-  text-transform: capitalize;
-}
-
 
 /* form over-riding css */
 .container-fluid {
@@ -190,18 +130,20 @@ form textarea {
 }
 
 /* overriding css for ImageEditor of MemeEditor*/
+.tui-image-editor-controls-logo,
+.tui-image-editor-controls-buttons,
+.tui-image-editor-header-buttons,
 .tui-image-editor-header-logo {
   display: none !important;
 }
 .tui-image-editor-header-buttons {
   float: left !important;
-} 
-.tui-image-editor-header-buttons {
-  /* margin-left: 10px; */
-  display: none !important;
 }
 .tui-image-editor-container .color-picker-control {
   width: 300px !important;
+}
+.tui-image-editor-container.top .color-picker-control {
+  top: 115% !important;
 }
 .tui-image-editor-container div.tui-colorpicker-clearfix {
   width: 265px !important;
@@ -231,6 +173,13 @@ form textarea {
 .filter .badge-default {
   margin: 0 25px;
 }
+.tui-image-editor-container.top {
+  margin-top: 60px;
+}
+.tui-image-editor-container.left,
+.tui-image-editor-container.right {
+  height: calc(100vh - 0px) !important;
+}
 
 
 .editor-title {
@@ -244,9 +193,12 @@ form textarea {
 }
 .load-download {
   position: relative;
-  margin-bottom: -60px;
+  margin-bottom: -55.5px;
   z-index: 1000;
   text-align: center;
+}
+.load-download.editor-menu-top {
+  margin-bottom: 5px;
 }
 .load-download button{
   width: 50px !important;
@@ -327,6 +279,85 @@ form textarea {
 }
 
 
+
+/* self descriptive css */
+.hidden {
+  display: none;
+}
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: center;
+}
+.text-right {
+  text-align: center;
+}
+.p-0 {
+  padding: 0;
+}
+.text-color-default {
+  color: #4DBCAD;
+}
+.text-color-cyan {
+  color: cyan;
+}
+.text-color-white {
+  color: white;
+}
+.text-color-red {
+  color: red;
+}
+.text-color-green {
+  /* color: green; */
+  color: #6af700;
+}
+.text-color-yellow {
+  color: yellow;
+}
+.text-color-indigo {
+  color: #3F54B5;
+}
+.text-color-secondary {
+  color: #9932cc;
+}
+.bg-none {
+  background-color: transparent;
+}
+.m-l-10 {
+  margin-left: 10px;
+}
+.m-b-25 {
+  margin-bottom: 25px;
+}
+.flip-horizontally {
+  transform: scaleX(-1);
+}
+.pos-rel {
+  position: relative;
+}
+.row {
+  display: flex;
+}
+.block {
+  display: block;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.disabled {
+  color: #ccc !important;
+  cursor: default !important;
+}
+.text-capitalize {
+  text-transform: capitalize;
+}
+.text-trans-none {
+  text-transform: none;
+}
+
+
+
 /* media queries for small screens */
 @media only screen and (max-width: 600px) {
   #searchResults {
@@ -352,5 +383,19 @@ form textarea {
     line-height: 1.2;
     padding: 10px 5px;
     top: 0;
+  }
+  .tui-image-editor-container.top .tui-image-editor-submenu {
+    top: 25px;
+  }
+  .tui-image-editor-container.bottom .tui-image-editor-submenu {
+    bottom: 25px;
+  }
+  .tui-image-editor-container.top .color-picker-control,
+  .tui-image-editor-container.bottom .color-picker-control {
+    left: -200px !important;
+  }
+  .tui-image-editor-container.top .color-picker-control .triangle,
+  .tui-image-editor-container.bottom .color-picker-control .triangle {
+    left: 70% !important;
   }
 }

@@ -3,7 +3,6 @@ import "tui-image-editor/dist/tui-image-editor.css";
 import {
 	MDBRow,
 	MDBBtn,
-	MDBModal,
 	MDBModalBody,
 	MDBIcon,
 	MDBContainer
@@ -12,7 +11,8 @@ import Loader from './Loader'
 import { connect } from "react-redux";
 import { AppActions } from "../actions";
 import ImageEditorWrapper from "./ImageEditorWrapper";
-import { MODALS, INTENTIONAL_NULL_VALUE, BASE, XTRA } from "../constants/constants";
+import { MODALS, INTENTIONAL_NULL_VALUE, BASE, XTRA, imageEditorConfig } from "../constants/constants";
+import ModalsAlerts from "./ModalsAlerts";
 
 class ImageEditorContainer extends React.Component {
 
@@ -33,14 +33,11 @@ class ImageEditorContainer extends React.Component {
 		}
 	}
 
-	showHideXtraEditor(showXtraEditor) {
-		this.props.showHideXtraEditor(showXtraEditor)
-	}
-
 	loadExtraEditor(event) {
+	// sometimes browsing file and selecting fails and did not return anything
 		const files = event.target.files
         if (files.length > 0) {
-			this.showHideXtraEditor(true)
+			this.props.showHideXtraEditor(true)
 			const xtraImageEditorRef = this.xtraImageEditorRef.current
 			if (xtraImageEditorRef) {
 				xtraImageEditorRef.imageLoadWrapper(event.target.files[0])
@@ -55,9 +52,9 @@ class ImageEditorContainer extends React.Component {
 		}
 	}
 	checkCanvasSize() {
-		const xtraImageSize = this.xtraImageEditorRef.current.imageEditor.current.imageEditorInst.getCanvasSize()
+		let xtraImageSize = this.xtraImageEditorRef.current.imageEditor.current.imageEditorInst.getCanvasSize()
 		const baseImageSize = this.baseImageEditorRef.current.imageEditor.current.imageEditorInst.getCanvasSize()
-		if (xtraImageSize.width > baseImageSize.width) {
+		if (xtraImageSize && xtraImageSize.width > baseImageSize.width) {
 			this.props.openModal(
 				MODALS.addMoreImageAlert,
 				{
@@ -73,7 +70,7 @@ class ImageEditorContainer extends React.Component {
 		const data = this.xtraImageEditorRef.current.imageEditor.current.imageEditorInst.toDataURL()
 		this.baseImageEditorRef.current.imageEditor.current.imageEditorInst.addImageObject(data)
 		this.closeModal()
-		this.showHideXtraEditor(false)
+			this.props.showHideXtraEditor(false)
 	}
 
 	getXtraImageAlertJSX(xtraImageSize, baseImageSize) {
@@ -156,19 +153,20 @@ class ImageEditorContainer extends React.Component {
 						onClick={this.checkCanvasSize.bind(this)} >
 						<MDBIcon icon="check" size="2x" className="text-color-green" />
 					</MDBBtn>
-					<MDBBtn onClick={this.showHideXtraEditor.bind(this, false)} className="btn-round" circle color="white" title="Cancel">
+					<MDBBtn onClick={this.props.showHideXtraEditor.bind(this, false)} className="btn-round" circle color="white" title="Cancel">
 						<MDBIcon icon="times" size="2x" className="text-color-red" />
 					</MDBBtn>
 				</div>
 				{
 					xtraImageloading
 					?
-						<Loader icon={'spinner'} pulse={true}  />
+						<Loader icon={'spinner'} pulse={true} />
 					:					
 						<ImageEditorWrapper
 							componentId={XTRA}
 							ref={this.xtraImageEditorRef}
 							selectedImageURL={xtraImageURL}
+							myTheme={imageEditorConfig.defaultTheme2}
 						/>
 				}
 			</div>
@@ -181,16 +179,9 @@ class ImageEditorContainer extends React.Component {
 			selectedImageURL,
 			useImageloading,
 			xtraImageloading,
-			openModalName,
 			showXtraEditor,
 			xtraImageURL,
-			xtraImageSize,
-			baseImageSize,
-			imageSize,
 		} = this.props
-		const isAddMoreImageAlert = openModalName === MODALS.addMoreImageAlert && xtraImageSize.width
-		const isImageLoadFailModal = openModalName === MODALS.imageLoadFail
-		const modalPosition = isAddMoreImageAlert || isImageLoadFailModal ? 'top' : 'center'
 		return (
 			<div>
 				<div id="cream-your-meme"
@@ -203,18 +194,18 @@ class ImageEditorContainer extends React.Component {
 						<MDBBtn color="white" circle className="btn-round" title="Select Image"
 							onClick={this.browseImage.bind(this)}
 						>
-							<MDBIcon className="text-color-indigo" icon="image" size="2x"/>
+							<MDBIcon className="text-color-secondary" icon="image" size="2x"/>
 						</MDBBtn>
 						<MDBBtn color="white" circle className="btn-round" title="Add image"
 							onClick={()=>document.getElementById('addImage').click()} disabled={ isBaseImageLoaded ? null : true }
 						>
-							<MDBIcon className="text-color-indigo" icon="images" size="2x"/>
+							<MDBIcon className="text-color-secondary" icon="images" size="2x"/>
 							<input className="hidden" id="addImage" type="file" 
 								onChange={this.loadExtraEditor.bind(this)} accept="image/x-png,image/gif,image/jpeg" />
 						</MDBBtn>
 						<MDBBtn color="default" circle className="btn-round" title="Save to disk"
 							onClick={this.saveImageToDisk.bind(this)} disabled={ isBaseImageLoaded ? null : true } >
-							<MDBIcon className="text-color-indigo" icon="download" size="2x"/>
+							<MDBIcon className="text-color-secondary" icon="download" size="2x"/>
 						</MDBBtn>
 					</div>
 					{
@@ -232,15 +223,9 @@ class ImageEditorContainer extends React.Component {
 				{
 					this.getXtraImageEditorJSX(xtraImageloading, showXtraEditor, xtraImageURL)
 				}
-				<MDBModal
-					isOpen={isAddMoreImageAlert || isImageLoadFailModal}
-					toggle={this.closeModal.bind(this)} frame position={modalPosition}
-				>
-					{ isAddMoreImageAlert && this.getXtraImageAlertJSX(
-						xtraImageSize, baseImageSize
-					)}
-					{ isImageLoadFailModal && this.getImageLoadFailJSX(imageSize) }
-				</MDBModal>
+				<ModalsAlerts 
+					addEditedImageFn={this.finallyAddEditedImage.bind(this)}
+				/>
 			</div>
 		)
 	}

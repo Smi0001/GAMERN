@@ -8,9 +8,6 @@ import GalleryImage from './GalleryImage';
 
 class GoogleImageResult extends Component {
 
-    componentDidMount() {
-    }
-
     handleSearch = async(event) => {
         let searchString = event.target.value, isSearch = false
         if (searchString) { 
@@ -87,7 +84,8 @@ class GoogleImageResult extends Component {
                             <div className="pos-rel">
                                 <label className="powered-text">Powered by Google Custom Search</label>
                             </div>
-                            <MDBInput label="Search with meme tags" id="searchBox" onKeyDown={this.handleSearch.bind(this)}
+                            <MDBInput label="Search with meme tags" id="searchBox" containerClass="mr-1"
+                                onKeyDown={this.handleSearch.bind(this)}
                                 icon="search" iconClass="float-right pos-rel cursor-pointer" onIconClick={this.handleSearch.bind(this)}
                             />
                         </MDBCol>
@@ -97,7 +95,7 @@ class GoogleImageResult extends Component {
                     {
                         imageListloading
                         ?
-                            <Loader icon={'spinner'} pulse={true}  />
+                            <Loader icon={'spinner'} pulse={true} customClass="bg-none" iconClass="text-color-black"  />
                         :
                             imageList && imageList.length === 0
                             ?

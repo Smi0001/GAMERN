@@ -31,3 +31,10 @@ export const MODALS = {
     imageLoadFail: 'imageLoadFail',
     addImageEditor: 'addImageEditor',
 }
+
+export const MENU_BAR_POSITION = {
+    UP: 'top',
+    DOWN: 'bottom',
+    LEFT: 'left',
+    RIGHT: 'right'
+}

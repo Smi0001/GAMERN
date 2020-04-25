@@ -6,6 +6,7 @@ import {
     imageEditorConfig,
     MODALS,
     XTRA,
+    MENU_BAR_POSITION,
 } from '../constants/constants';
 import UTILS from '../utils/common-utils';
 const download = require("downloadjs")
@@ -33,6 +34,7 @@ class ImageEditorWrapper extends React.Component {
             selectedImageURL: props.selectedImageURL,
             myTheme: props.myTheme,
             componentId: props.componentId,
+            menuBarPositionProp: props.menuBarPositionProp,
         }
     }
 
@@ -46,6 +48,9 @@ class ImageEditorWrapper extends React.Component {
         if (updatedProps.selectedImageURL !== prevProps.selectedImageURL) {
             updateStateObject.selectedImageURL = updatedProps.selectedImageURL
         }
+        if (updatedProps.menuBarPositionProp !== prevProps.menuBarPositionProp) {
+            this.toggleEditor(updatedProps)
+        }
         if (Object.keys(updateStateObject).length > 0) {
             this.setState(
                 {...updateStateObject}
@@ -53,6 +58,15 @@ class ImageEditorWrapper extends React.Component {
         }
     }
 
+    toggleEditor(props) {
+        const querySelector = `#tui-image-editor-${props.componentId}>.tui-image-editor-container`
+        const overridingClass =  props.menuBarPositionProp
+        UTILS.replaceClassFromElement(
+            querySelector,
+            overridingClass,
+            Object.values(MENU_BAR_POSITION)
+        )
+    }
     isImageValidInSize(file) {
         return file.size <= imageSizeAllowed
     }

@@ -1,6 +1,6 @@
 import * as actionType from '../actions/ActionType';
 import APIUtils from '../utils/api-utils'
-import { EMPTY_STRING, INTENTIONAL_NULL_VALUE } from '../constants/constants';
+import { EMPTY_STRING, INTENTIONAL_NULL_VALUE, BASE, imageEditorConfig } from '../constants/constants';
 
 const initialState = {
     searchString: EMPTY_STRING,
@@ -18,6 +18,8 @@ const initialState = {
     imageSize: INTENTIONAL_NULL_VALUE,
     xtraImageSize: {},
     baseImageSize: {},
+    xtraEditorPosition: imageEditorConfig.menuBarPosition,
+    baseEditorPosition: imageEditorConfig.menuBarPosition,
     addMoreImageAlertStates: {},
     imageLoadModalStates: {},
     selectedImageId: INTENTIONAL_NULL_VALUE,
@@ -130,6 +132,23 @@ const reducerState = (prevState = {}, action) => {
             return {
                 ...prevState,
                 showXtraEditor,
+            }
+        }
+
+        case actionType.SET_MENU_BAR_POSITION: {
+            let {
+                editorName,
+                editorPosition
+            } = action.payload
+            let navMenuObject = {}
+            if (editorName === BASE) {
+                navMenuObject.baseEditorPosition = editorPosition
+            } else {
+                navMenuObject.xtraEditorPosition = editorPosition
+            }
+            return {
+                ...prevState,
+                ...navMenuObject,
             }
         }
 

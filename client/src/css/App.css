@@ -178,7 +178,7 @@ form textarea {
 }
 .tui-image-editor-container.left,
 .tui-image-editor-container.right {
-  height: calc(100vh - 0px) !important;
+  min-height: calc(100vh - 0px) !important;
 }
 
 
@@ -194,7 +194,7 @@ form textarea {
 .load-download {
   position: relative;
   margin-bottom: -55.5px;
-  z-index: 1000;
+  z-index: 10;
   text-align: center;
 }
 .load-download.editor-menu-top {
@@ -355,7 +355,57 @@ form textarea {
 .text-trans-none {
   text-transform: none;
 }
-
+.nav-menu {
+  position: absolute;
+  right: 5px;
+  padding: 0;
+  bottom: 0;
+  cursor: pointer;
+  border: none;
+  box-shadow: none;
+  z-index: 11;
+}
+.nav-menu:hover,
+.nav-menu:active {
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+.nav-menu-hidden {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: -5px;
+  background: #fff;
+  border: 1px solid teal;
+  font-size: 15px;
+  box-shadow: -3px 1px 3px rgba(0,0,0,0.5);
+}
+.nav-menu-hidden.expand {
+  display: block;
+}
+.nav-menu-hidden .popover-header {
+  font-size: 14px;
+}
+.nav-menu-hidden ul{
+  text-align: left;
+  width: 140px;
+  padding: 2px 2px 2px 35px;
+  margin-bottom: 0px;
+}
+.nav-menu-hidden ul>li {
+  cursor: pointer;
+  color: #007bff;
+  padding: 5px 0;
+  list-style: none;
+}
+.nav-menu-hidden ul>li:hover,
+.nav-menu-hidden ul>li:active {
+  color: #0056b3
+}
+.nav-menu-icons {
+  left: 0;
+  padding: 2px 10px;
+  position: absolute;
+}
 
 
 /* media queries for small screens */

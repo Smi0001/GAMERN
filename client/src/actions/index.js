@@ -75,4 +75,14 @@ export const AppActions = {
 		}
 	},
 
+	setMenuBarPosition: (editorName, editorPosition) => {
+		return {
+			type: actionType.SET_MENU_BAR_POSITION,
+			payload: {
+				editorName,
+				editorPosition,
+			}
+		}
+	},
+
 }

@@ -5,7 +5,7 @@ import {
 	MDBBtn,
 	MDBModalBody,
 	MDBIcon,
-	MDBContainer
+	MDBContainer,
 } from "mdbreact";
 import Loader from './Loader'
 import { connect } from "react-redux";
@@ -13,6 +13,8 @@ import { AppActions } from "../actions";
 import ImageEditorWrapper from "./ImageEditorWrapper";
 import { MODALS, INTENTIONAL_NULL_VALUE, BASE, XTRA, imageEditorConfig } from "../constants/constants";
 import ModalsAlerts from "./ModalsAlerts";
+import NavMenu from "./NavMenu";
+import UTILS from "../utils/common-utils";
 
 class ImageEditorContainer extends React.Component {
 
@@ -20,8 +22,23 @@ class ImageEditorContainer extends React.Component {
 		super(props)
 		this.baseImageEditorRef = React.createRef()
 		this.xtraImageEditorRef = React.createRef()
+		this.baseNavMenuRef = React.createRef()
+		this.xtraNavMenuRef = React.createRef()
 	}
 
+	componentDidMount() {
+		this.popupCloser()
+	}
+	popupCloser() {
+		const closeOpenedMenuBarFn = () => {
+			this.baseNavMenuRef.current && this.baseNavMenuRef.current.closeMenuBar()
+			this.xtraNavMenuRef.current && this.xtraNavMenuRef.current.closeMenuBar()
+		}
+		UTILS.bodyClickButNotElementCallback('.nav-menu', closeOpenedMenuBarFn)
+	}
+	componentWillUnmount() {
+		UTILS.removeBodyClick()
+	}
 	closeModal() {
 		this.props.closeModal()
 	}
@@ -140,13 +157,17 @@ class ImageEditorContainer extends React.Component {
 			</MDBModalBody>
 		)
 	}
-	getXtraImageEditorJSX(xtraImageloading, showXtraEditor, xtraImageURL) {
+	getXtraImageEditorJSX(xtraImageloading, showXtraEditor, xtraImageURL, xtraEditorPosition) {
 		const dynamicClass = 'container-fluid p-0 ' + (showXtraEditor?'':' hidden')
 		return (
 			<div id="xtra-image" className={dynamicClass}>
 				<h3 className="center pos-rel">
 					<label className="editor-title">Edit </label>
 					<label className="powered-text">Powered by Toast UI Image Editor</label>
+					<NavMenu
+						editorName={XTRA}
+						ref={this.xtraNavMenuRef}
+					/>
 				</h3>
 				<div className="load-download">
 					<MDBBtn title="Add this image" className="btn-round" circle color="white"
@@ -167,6 +188,7 @@ class ImageEditorContainer extends React.Component {
 							ref={this.xtraImageEditorRef}
 							selectedImageURL={xtraImageURL}
 							myTheme={imageEditorConfig.defaultTheme2}
+							menuBarPositionProp={xtraEditorPosition}
 						/>
 				}
 			</div>
@@ -181,6 +203,8 @@ class ImageEditorContainer extends React.Component {
 			xtraImageloading,
 			showXtraEditor,
 			xtraImageURL,
+			xtraEditorPosition,
+			baseEditorPosition,
 		} = this.props
 		return (
 			<div>
@@ -189,6 +213,10 @@ class ImageEditorContainer extends React.Component {
 					<h3 className="center pos-rel">
 						<label className="editor-title">Cream your meme</label>
 						<label className="powered-text">Powered by Toast UI Image Editor</label>
+						<NavMenu
+							editorName={BASE}
+							ref={this.baseNavMenuRef}
+						/>
 					</h3>
 					<div className="load-download">
 						<MDBBtn color="white" circle className="btn-round" title="Select Image"
@@ -217,11 +245,12 @@ class ImageEditorContainer extends React.Component {
 							componentId={BASE}
 							ref={this.baseImageEditorRef}
 							selectedImageURL={selectedImageURL}
+							menuBarPositionProp={baseEditorPosition}
 						/>
 					}
 				</div>
 				{
-					this.getXtraImageEditorJSX(xtraImageloading, showXtraEditor, xtraImageURL)
+					this.getXtraImageEditorJSX(xtraImageloading, showXtraEditor, xtraImageURL, xtraEditorPosition)
 				}
 				<ModalsAlerts 
 					addEditedImageFn={this.finallyAddEditedImage.bind(this)}
@@ -247,6 +276,8 @@ export default connect(
 			xtraImageURL: state.reducerState.xtraImageURL,
 			addMoreImageAlertStates: state.reducerState.addMoreImageAlertStates,
 			imageLoadModalStates: state.reducerState.imageLoadModalStates,
+			xtraEditorPosition: state.reducerState.xtraEditorPosition,
+			baseEditorPosition: state.reducerState.baseEditorPosition,
 		}
   	},
   // mapDispatchToProps

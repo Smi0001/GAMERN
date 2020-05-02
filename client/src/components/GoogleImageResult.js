@@ -5,13 +5,8 @@ import store from '../reduxStore'
 import { AppActions } from '../actions';
 import Loader from './Loader'
 import GalleryImage from './GalleryImage';
-// import PaginationComponent from './PaginationComponent';
-
 
 class GoogleImageResult extends Component {
-
-    componentDidMount() {
-    }
 
     handleSearch = async(event) => {
         let searchString = event.target.value, isSearch = false
@@ -86,10 +81,11 @@ class GoogleImageResult extends Component {
                 <MDBContainer className="p-0">
                     <MDBRow>
                         <MDBCol xl="12" lg="12" md="12">
-                            <div class="pos-rel">
-                                <label className="powered-text">Powered by Google Search</label>
+                            <div className="pos-rel">
+                                <label className="powered-text">Powered by Google Custom Search</label>
                             </div>
-                            <MDBInput label="Search with meme tags" id="searchBox" onKeyDown={this.handleSearch.bind(this)}
+                            <MDBInput label="Search with meme tags" id="searchBox" containerClass="mr-1"
+                                onKeyDown={this.handleSearch.bind(this)}
                                 icon="search" iconClass="float-right pos-rel cursor-pointer" onIconClick={this.handleSearch.bind(this)}
                             />
                         </MDBCol>
@@ -99,7 +95,7 @@ class GoogleImageResult extends Component {
                     {
                         imageListloading
                         ?
-                            <Loader icon={'spinner'} pulse={true}  />
+                            <Loader icon={'spinner'} pulse={true} customClass="bg-none" iconClass="text-color-black"  />
                         :
                             imageList && imageList.length === 0
                             ?
@@ -112,7 +108,6 @@ class GoogleImageResult extends Component {
         )
     }
 }
-
 
 function mapStateToProps(state){
     return {
@@ -131,4 +126,5 @@ const mapDispatchToProps = dispatch => {
         },
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps )(GoogleImageResult)
+
+export default connect(mapStateToProps, mapDispatchToProps)(GoogleImageResult)

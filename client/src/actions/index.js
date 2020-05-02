@@ -1,86 +1,88 @@
 import * as actionType from './ActionType';
-
-
-// const setIsImageLoaded = 
+import { INTENTIONAL_NULL_VALUE } from '../constants/constants';
 
 export const AppActions = {
 
-  getImageList: (searchString, options) => {
-    return {
-      type: actionType.GET_IMAGE_LIST,
-      payload: {
-        searchString,
-        options
-      }
-    }
-  },
+	getImageList: (searchString, options) => {
+		return {
+			type: actionType.GET_IMAGE_LIST,
+			payload: {
+				searchString,
+				options,
+			}
+		}
+	},
 
-  setImageList: (imageList) => {
-    return {
-      type: actionType.SET_IMAGE_LIST,
-      payload: {
-        imageList
-      }
-    }
-  },
+	setImageList: (imageList) => {
+		return {
+			type: actionType.SET_IMAGE_LIST,
+			payload: {
+				imageList,
+			}
+		}
+	},
 
-  useImage: (imageThumbnail, imageUrl, imageId) => {
-    return {
-      type: actionType.USE_IMAGE,
-      payload: {
-        imageThumbnail,
-        imageUrl,
-        imageId
-      }
-    }
-  },
+	useImage: (imageThumbnail, imageUrl, imageId, xtraImage) => {
+		return {
+			type: actionType.USE_IMAGE,
+			payload: {
+				imageThumbnail,
+				imageUrl,
+				imageId,
+				xtraImage,
+			}
+		}
+	},
 
-  toggleEditor: () => {
-    return {
-      type: actionType.TOGGLE_EDITOR,
-    }
-  },
+	loadSelectedImageURL: (selectedImageURL, xtraImage) => {
+		return {
+			type: actionType.LOAD_SELECTED_IMAGE_URL,
+			payload: {
+				selectedImageURL,
+				xtraImage,
+			}
+		}
+	},
 
-  loadSelectedImageURL: (selectedImageURL) => {
-    return {
-      type: actionType.LOAD_SELECTED_IMAGE_URL,
-      payload: {
-        selectedImageURL
-      }
-    }
-  },
+	setIsBaseImageLoadStatus: (isBaseImageLoaded) => {
+		return {
+			type: actionType.SET_IS_IMAGE_LOADED,
+			payload: {
+				isBaseImageLoaded,
+			}
+		}
+	},
 
-  unloadSelectedImageURL: () => {
-    return {
-      type: actionType.UNLOAD_SELECTED_IMAGE_URL
-    }
-  },
+	openModal: (
+		openModalName,
+		modalStateObjects,
+	) => {
+		return {
+			type: actionType.OPEN_MODAL,
+			payload: {
+				openModalName: openModalName || INTENTIONAL_NULL_VALUE,
+				...modalStateObjects || {},
+			}
+		}
+	},
 
-  unloadBrowsedImage: () => {
-    return {
-      type: actionType.UNLOAD_BROWSED_IMAGE_URL,
-    }
-  },
+	showHideXtraEditor: (showXtraEditor) => {
+		return {
+			type: actionType.TOGGLE_XTRA_EDITOR,
+			payload: {
+				showXtraEditor,
+			}
+		}
+	},
 
-  setIsImageLoadStatus: (isImageLoaded) => {
-    return {
-      type: actionType.SET_IS_IMAGE_LOADED,
-      payload: {
-        isImageLoaded
-      }
-    }
-  },
-
-  openImageAlertModal: ({openAdditionalImageAlertModal, canvasSize, largestImageSize}) => {
-    return {
-      type: actionType.OPEN_IMAGE_ALERT_MODAL,
-      payload: {
-        openAdditionalImageAlertModal,
-        canvasSize,
-        largestImageSize
-      }
-    }
-  },
-  
+	setMenuBarPosition: (editorName, editorPosition) => {
+		return {
+			type: actionType.SET_MENU_BAR_POSITION,
+			payload: {
+				editorName,
+				editorPosition,
+			}
+		}
+	},
 
 }

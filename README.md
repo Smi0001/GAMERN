@@ -61,3 +61,7 @@ To search images, internet is required
 
 `Google Image Search plugin`
 - [image-search-google ![npmjs](https://static.npmjs.com/b0f1a8318363185cc2ea6a40ac23eeb2.png)](https://www.npmjs.com/package/image-search-google)
+
+
+### License
+Every tool of this product is open source with their [license](./License.txt)

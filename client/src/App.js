@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import SpeechList from './components/SpeechList'
 // import AddSpeech from './components/AddSpeech'
-import MemeEditor from './components/MemeEditor';
+import ImageEditorContainer from './components/ImageEditorContainer';
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 import SETTINGS from './settings'
@@ -19,22 +19,21 @@ const client = new ApolloClient({
   uri: SETTINGS.graphqlURL
 })
 
-
 class App extends Component {
   
-  render() {
-    return (
-      <ApolloProvider client={client}>
-        <div className="App">
-            <h2 className="text-center"> Meme Team</h2>
-            <GoogleImageResult />
-            <MemeEditor />
-            {/* <SpeechList /> */}
-            {/* <AddSpeech /> */}
-        </div>
-      </ApolloProvider>
-    );
-  }
+	render() {
+		return (
+			<ApolloProvider client={client}>
+				<div className="App">
+					<h2 className="text-center"> Meme Team</h2>
+					<GoogleImageResult />
+					<ImageEditorContainer />
+					{/* <SpeechList /> */}
+					{/* <AddSpeech /> */}
+				</div>
+			</ApolloProvider>
+		);
+	}
 }
 
 export default App;

@@ -1,18 +1,28 @@
 import * as actionType from '../actions/ActionType';
 import APIUtils from '../utils/api-utils'
+import { EMPTY_STRING, INTENTIONAL_NULL_VALUE, BASE, imageEditorConfig } from '../constants/constants';
 
 const initialState = {
-    searchString: '',
+    searchString: EMPTY_STRING,
     imageList: [],
     imageListloading: false,
-    isImageLoaded: false,
+    isBaseImageLoaded: false,
+    openImageSizeModal: false,
     useImageloading: false,
-    loadFirstEditor: true, // used to toggle between two editor components
-    selectedImageURL: null,
+    xtraImageloading: false,
+    showXtraEditor: false,
+    selectedImageURL: INTENTIONAL_NULL_VALUE,
+    xtraImageURL: INTENTIONAL_NULL_VALUE,
     openAdditionalImageAlertModal: false,
-    canvasSize: {},
-    largestImageSize: {},
-    selectedImageId: null,
+    openModalName: INTENTIONAL_NULL_VALUE,
+    imageSize: INTENTIONAL_NULL_VALUE,
+    xtraImageSize: {},
+    baseImageSize: {},
+    xtraEditorPosition: imageEditorConfig.menuBarPosition,
+    baseEditorPosition: imageEditorConfig.menuBarPosition,
+    addMoreImageAlertStates: {},
+    imageLoadModalStates: {},
+    selectedImageId: INTENTIONAL_NULL_VALUE,
     resultCount: 0,
     options: {
         page: 1,
@@ -56,75 +66,89 @@ const reducerState = (prevState = {}, action) => {
             let {
                 imageThumbnail,
                 imageUrl,
-                imageId
+                imageId,
+                xtraImage
             } = action.payload
-            APIUtils.checkImageExists(imageThumbnail, imageUrl)
+            APIUtils.checkImageExists(imageThumbnail, imageUrl, xtraImage)
+            let imageStateObject = {
+                selectedImageId: imageId,
+            }
+            if (xtraImage) {
+                imageStateObject.xtraImageloading = true
+                imageStateObject.showXtraEditor = true
+            } else {
+                imageStateObject.useImageloading = true
+                imageStateObject.showXtraEditor = false
+            }
             return  {
                 ...prevState,
-                useImageloading: true,
-                selectedImageId: imageId,
+                ...imageStateObject,
             }
         }
 
         case actionType.LOAD_SELECTED_IMAGE_URL: {
             let {
                 selectedImageURL,
+                xtraImage
             } = action.payload
+            const imageStateObject = {}
+            if (xtraImage) {
+                imageStateObject.xtraImageURL = selectedImageURL
+                imageStateObject.xtraImageloading = false
+                imageStateObject.showXtraEditor = true
+            } else {
+                imageStateObject.selectedImageURL = selectedImageURL
+                imageStateObject.useImageloading = false
+                imageStateObject.isBaseImageLoaded = true
+                imageStateObject.showXtraEditor = false
+            }
             return  {
                 ...prevState,
-                selectedImageURL,
-                useImageloading: false,
-                isImageLoaded: true,
-                loadFirstEditor: !prevState.loadFirstEditor,
+                ...imageStateObject,
             }
         }
-
-        case actionType.TOGGLE_EDITOR: {
-            return  {
-                ...prevState,
-                selectedImageURL: null,
-                useImageloading: false,
-                isImageLoaded: false,
-                loadFirstEditor: !prevState.loadFirstEditor,
-            }
-        }
-
-        // case actionType.UNLOAD_BROWSED_IMAGE_URL: {
-        //     return {
-        //         ...prevState,
-        //         selectedImageURL: '',
-        //         isImageLoaded: false,
-        //         loadFirstEditor: !prevState.loadFirstEditor,
-        //     }
-        // }
 
         case actionType.SET_IS_IMAGE_LOADED: {
             let {
-                isImageLoaded
+                isBaseImageLoaded,
             } = action.payload
             return {
                 ...prevState,
-                isImageLoaded
+                isBaseImageLoaded,
             }
         }
 
-        case actionType.OPEN_IMAGE_ALERT_MODAL: {
-            let {
-                openAdditionalImageAlertModal,
-                canvasSize,
-                largestImageSize
-            } = action.payload
-            const canvasObject = {}
-            if (canvasSize) {
-                canvasObject.canvasSize = canvasSize
+        case actionType.OPEN_MODAL: {
+            return {
+                ...prevState,
+                ...action.payload,
             }
-            if (largestImageSize) {
-                canvasObject.largestImageSize = largestImageSize
+        }
+
+        case actionType.TOGGLE_XTRA_EDITOR: {
+            let {
+                showXtraEditor
+            } = action.payload
+            return {
+                ...prevState,
+                showXtraEditor,
+            }
+        }
+
+        case actionType.SET_MENU_BAR_POSITION: {
+            let {
+                editorName,
+                editorPosition
+            } = action.payload
+            let navMenuObject = {}
+            if (editorName === BASE) {
+                navMenuObject.baseEditorPosition = editorPosition
+            } else {
+                navMenuObject.xtraEditorPosition = editorPosition
             }
             return {
                 ...prevState,
-                openAdditionalImageAlertModal,
-                ...canvasObject
+                ...navMenuObject,
             }
         }
 

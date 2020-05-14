@@ -1,48 +1,63 @@
 import React, { Component } from 'react'
-import { MDBInput, MDBContainer, MDBRow, MDBCol, MDBBadge } from 'mdbreact'
+import { MDBInput, MDBContainer, MDBRow, MDBCol, MDBBadge, MDBIcon, MDBBtn } from 'mdbreact'
 import { connect } from 'react-redux';
-import store from '../reduxStore'
 import { AppActions } from '../actions';
 import Loader from './Loader'
 import GalleryImage from './GalleryImage';
 
 class GoogleImageResult extends Component {
 
-    handleSearch = async(event) => {
-        let searchString = event.target.value, isSearch = false
-        if (searchString) { 
-            var code = (event.keyCode ? event.keyCode : event.which);
-            isSearch = code === 13            
-        } else {
-            searchString = document.getElementById('searchBox').value
-            isSearch = searchString ? !!searchString.trim() : false
+    handleSearch = (event) => {
+        let searchString = event.target.value
+        if (searchString) {
+            this.props.updateSearchString(searchString)
         }
-        //call search api
-        if (isSearch) {
-            const options = {} // fetch options
-            store.dispatch(AppActions.getImageList(searchString, options))
+        var code = (event.keyCode ? event.keyCode : event.which);
+        if (code === 13) {
+            //call search api
+            this.props.getImageList()
         }
     }
     noResultsJSX() {
         return (
             <div className="no-image-result">
-                <MDBBadge color="light">
+                <MDBBadge color="light" className="result-tags">
                     Result Found: 0
                 </MDBBadge>
                 <span>&nbsp; Try different search tags</span>
             </div>
         )
     }
+    fetchPage(isNextPage) {
+        let currentPage = Number(this.props.options.page)
+        // since google result page 1 returns first 10 items but next page numbers resturns immediate next result item 
+        const pageNo = isNextPage ? currentPage + 10 : currentPage - 10
+        this.props.updateSearchOptions({
+            page: pageNo,
+        })
+        //call search api
+        this.props.getImageList()
+    }
     getSelectedFilterTagsJSX() {
         const { options, resultCount} = this.props
         return (
             <div className="text-left filter">
-                <MDBBadge color="default" className="text-capitalize">
+                <MDBBtn size="sm" circle className="btn-round result-tags" color="blue"
+                    onClick={this.fetchPage.bind(this, false)} disabled={options.page < 2 ? true : null}
+                >
+                    <MDBIcon icon="angle-double-left" />
+                </MDBBtn>
+                <MDBBtn size="sm" circle className="btn-round result-tags" color="blue"
+                    onClick={this.fetchPage.bind(this, true)}
+                >
+                    <MDBIcon icon="angle-double-right" />
+                </MDBBtn>
+                <MDBBadge color="default" className="text-capitalize result-tags">
                     Result Found: { resultCount }
                 </MDBBadge>
                 {
                     options && Object.keys(options).map(key => {
-                    return <MDBBadge color="default" key className="text-capitalize">
+                    return <MDBBadge color="default" key className="text-capitalize result-tags">
                             {`${key} : ${options[key]}`}
                         </MDBBadge>
                     })
@@ -85,8 +100,8 @@ class GoogleImageResult extends Component {
                                 <label className="powered-text">Powered by Google Custom Search</label>
                             </div>
                             <MDBInput label="Search with meme tags" id="searchBox" containerClass="mr-1"
-                                onKeyDown={this.handleSearch.bind(this)}
-                                icon="search" iconClass="float-right pos-rel cursor-pointer" onIconClick={this.handleSearch.bind(this)}
+                                onKeyUp={this.handleSearch.bind(this)}
+                                icon="search" iconClass="float-right pos-rel cursor-pointer" onIconClick={this.props.getImageList.bind(this)}
                             />
                         </MDBCol>
                     </MDBRow>
@@ -116,13 +131,20 @@ function mapStateToProps(state){
         resultCount: state.reducerState.resultCount,
         options: state.reducerState.options,
         useImageloading: state.reducerState.useImageloading,
+        searchString: state.reducerState.searchString,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        getImageList: (options) =>{
-            dispatch(AppActions.getImageList(options))
+        getImageList: () =>{
+            dispatch(AppActions.getImageList())
+        },
+        updateSearchString: (searchString) => {
+            dispatch(AppActions.updateSearchString(searchString))
+        },
+        updateSearchOptions: (options) => {
+            dispatch(AppActions.updateSearchOptions(options))
         },
     }
 }

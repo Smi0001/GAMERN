@@ -170,7 +170,7 @@ form textarea {
 .tui-image-editor-container .tui-image-editor-submenu {
   white-space: normal !important;
 }
-.filter .badge-default {
+.filter .result-tags {
   margin: 0 25px;
 }
 .tui-image-editor-container.top {
@@ -288,7 +288,7 @@ form textarea {
   text-align: center;
 }
 .text-left {
-  text-align: center;
+  text-align: left;
 }
 .text-right {
   text-align: center;

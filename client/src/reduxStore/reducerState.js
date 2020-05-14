@@ -34,17 +34,38 @@ const reducerState = (prevState = {}, action) => {
 
     switch (action.type) {
 
+        case actionType.UPDATE_SEARCH_STRING: {
+            let {
+                searchString,
+            } = action.payload
+            return {
+                ...prevState,
+                searchString,
+            }
+        }
+
+        case actionType.UPDATE_SEARCH_OPTIONS: {
+            let {
+                options
+            } = action.payload
+            return {
+                ...prevState,
+                options,
+            }
+        }
+
         case actionType.GET_IMAGE_LIST: {
             let {
                 searchString,
                 options
-            } = action.payload
+            } = prevState
             APIUtils.getSearchResults(
                 searchString,
                 options
             )
             return {
                 ...prevState,
+                imageList: [],
                 imageListloading: true,
             }
         }

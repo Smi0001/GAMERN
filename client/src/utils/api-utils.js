@@ -56,10 +56,8 @@ const APIUtils = {
     getGoogleResultsFromUI: async (searchString, optionsObj) => {
         // parameter page is actually startIndex
         const options = optionsObj ? optionsObj : { page: 1 }
-        console.log('searchString', searchString, options )
         try {
             const resultList = await GOOGLE_IMAGE_API(searchString, options)
-            console.log('Found image search Result: ', resultList.length)
             resultList &&
                 store.dispatch(
                     AppActions.setImageList(resultList)

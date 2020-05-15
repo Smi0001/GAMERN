@@ -6,7 +6,7 @@ import UTILS from '../utils/common-utils';
 
 class GalleryImage extends React.Component {
     getTruncateText(text) {
-        return text.substr(0, 20)+'...'
+       return UTILS.getTruncateText(text)
     }
 
     searchedImageClick(imageThumbnail, imageUrl, imageId, xtraImage) {

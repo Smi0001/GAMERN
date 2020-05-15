@@ -51,8 +51,11 @@ const UTILS = {
     },
     removeBodyClick: () => {
         document.removeEventListener && document.removeEventListener('click')
-        // console.log('removed clicked')
     },
+    getTruncateText(text) {
+        const textString = text ? text : 'Title not available'
+        return textString.substr(0, 20)+'...'
+    }
 
 }
 

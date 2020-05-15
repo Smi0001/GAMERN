@@ -57,8 +57,10 @@ class GoogleImageResult extends Component {
                 </MDBBadge>
                 {
                     options && Object.keys(options).map(key => {
+                        let pageNum = Math.ceil( options[key] / 10)
+                        let optionValue = key === 'page' ? pageNum : options[key]
                     return <MDBBadge color="default" key className="text-capitalize result-tags">
-                            {`${key} : ${options[key]}`}
+                            {`${key} : ${optionValue}`}
                         </MDBBadge>
                     })
                 }

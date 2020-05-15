@@ -1,1 +1,1 @@
-web: cd ./client && yarn
+web: cd ./client && npm install

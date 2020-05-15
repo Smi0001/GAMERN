@@ -3,6 +3,24 @@ import { INTENTIONAL_NULL_VALUE } from '../constants/constants';
 
 export const AppActions = {
 
+	updateSearchString: (searchString) => {
+		return {
+			type: actionType.UPDATE_SEARCH_STRING,
+			payload: {
+				searchString,
+			}
+		}
+	},
+
+	updateSearchOptions: (options) => {
+		return {
+			type: actionType.UPDATE_SEARCH_OPTIONS,
+			payload: {
+				options,
+			}
+		}
+	},
+
 	getImageList: (searchString, options) => {
 		return {
 			type: actionType.GET_IMAGE_LIST,

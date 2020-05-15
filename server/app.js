@@ -38,7 +38,9 @@ app
     function(req, res) {
         const searchString = req.query.q
         let optionsObj = req.query.options
-        const options = optionsObj ? JSON.parse(optionsObj) : { page:1 }
+        optionsObj = JSON.parse(optionsObj)
+        // optionsObj.page = optionsObj.page > 1 ? optionsObj.page * 10 : optionsObj.page
+        const options = optionsObj ? optionsObj : { page:1 }
         console.log('searchString', searchString, options )
         GOOGLE.search(searchString, options).then( response => {
             console.log('Found image search Result: ', response.length)

@@ -35,13 +35,13 @@ const UTILS = {
             if (clickedElementClass) {
                 const passedElement = document.querySelector(`.${clickedElementClass.split(' ').join('.')}`)
                 if (passedElement) {
-                    console.log('passsedElement', passedElement)
+                    // console.log('passsedElement', passedElement)
                     const passedElementAsParent = passedElement.closest(elementClass)
                     if (passedElementAsParent && (
                         passedElementAsParent.classList.contains('nav-menu')
                         || passedElementAsParent.classList.contains(elementClass)
                     )) {
-                        console.log('condition true', passedElementAsParent)
+                        // console.log('condition true', passedElementAsParent)
                         return false
                     }
                 }
@@ -51,7 +51,7 @@ const UTILS = {
     },
     removeBodyClick: () => {
         document.removeEventListener && document.removeEventListener('click')
-        console.log('removed clicked')
+        // console.log('removed clicked')
     },
 
 }

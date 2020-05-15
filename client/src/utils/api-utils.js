@@ -2,7 +2,7 @@ import axios from 'axios'
 import { AppActions } from '../actions';
 import store from '../reduxStore'
 import { MODALS, INTENTIONAL_NULL_VALUE } from '../constants/constants'
-
+import GOOGLE_IMAGE_API from './google-image-utils'
 const baseUrl = 'http://localhost:4000/'
 
 const URL = {
@@ -18,7 +18,7 @@ const APIUtils = {
         axios.get(url)
         .then(response => {
             store.dispatch(
-                AppActions.setImageList(response.data)
+                AppActions.setImageList(response)
             )
         })
         .catch(error => console.log(error))
@@ -53,7 +53,22 @@ const APIUtils = {
         })
     },
 
-    
+    getGoogleResultsFromUI: async (searchString, optionsObj) => {
+        // parameter page is actually startIndex
+        const options = optionsObj ? optionsObj : { page: 1 }
+        console.log('searchString', searchString, options )
+        try {
+            const resultList = await GOOGLE_IMAGE_API(searchString, options)
+            console.log('Found image search Result: ', resultList.length)
+            resultList &&
+                store.dispatch(
+                    AppActions.setImageList(resultList)
+                )
+        } catch (error) {
+            console.log('Error in getGoogleResultsFromUI:', error)
+        }
+    },
+
 }
 
 export default APIUtils

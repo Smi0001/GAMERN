@@ -30,7 +30,7 @@ class GoogleImageResult extends Component {
     }
     fetchPage(isNextPage) {
         let currentPage = Number(this.props.options.page)
-        // since google result page 1 returns first 10 items but next page numbers resturns immediate next result item 
+        // parameter page is actually startIndex
         const pageNo = isNextPage ? currentPage + 10 : currentPage - 10
         this.props.updateSearchOptions({
             page: pageNo,

@@ -59,7 +59,11 @@ const reducerState = (prevState = {}, action) => {
                 searchString,
                 options
             } = prevState
-            APIUtils.getSearchResults(
+            // APIUtils.getSearchResults(
+            //     searchString,
+            //     options
+            // )
+            APIUtils.getGoogleResultsFromUI(
                 searchString,
                 options
             )

@@ -50,12 +50,19 @@ Dev. can access [GraphiQL UI](http:localhost:4000/graphql) for DB handling at po
 
 For backend development we can execute `nodemon app` that watches for modifications in backend code and restarts server.
 
+### Create heroku app
+heroku create shammi-meme
 
 ### Deploy on heroku
 1. Create build of client module `npm run build --prefix ./client`
-2. Copy the build directory into server/public `cp -r ./client/build ./server/public`
-3. Push changes to heroku, Procfile containing command to run server/app.js run the server and static: public/index.html `node app.js`
+2. Copy the build directory into server/public `cp -r ./client/build/* ./server/public`
+3. Push changes to heroku `cd ./server && git add . && git commit -m "" && git push heroku master`
+, Procfile containing command to run server/app.js run the server and static: public/index.html `node app.js`
 
+Final command from root directory: `npm run build --prefix ./client && rm -r ./server/public/* && cp -r ./client/build/* ./server/public && cd ./server && git add . && git commit -m "updating public directory" && git push heroku master`
+
+### Watch heroku logs
+`heroku logs --tail --app=shammi-meme`
 
 ### Note
 To search images, internet is required

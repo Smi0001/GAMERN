@@ -3,16 +3,17 @@ import { AppActions } from '../actions';
 import store from '../reduxStore'
 import { MODALS, INTENTIONAL_NULL_VALUE } from '../constants/constants'
 import GOOGLE_IMAGE_API from './google-image-utils'
-const baseUrl = 'http://localhost:4000/'
 
+const BASE_API_DOMAIN = 'http://localhost:4000/'
+const baseUrl = process.env.NODE_ENV === "development" ? BASE_API_DOMAIN : '/'
 const URL = {
     getSearchResults: `search?q=searchString&options=optionsObject`,
 }
 
 const APIUtils = {
     getSearchResults: (searchString, options) => {
-        const url = baseUrl
-            +   URL.getSearchResults
+        const url = baseUrl +
+            URL.getSearchResults
             .replace('searchString', searchString)
             .replace('optionsObject', JSON.stringify(options))
         axios.get(url)

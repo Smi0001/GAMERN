@@ -7,7 +7,8 @@
     "start": "npm run build --prefix ./client && cp -r ./client/build/* ./server/public/ && npm run start --prefix ./server",
     "ui": "npm run start --prefix ./client",
     "api": "npm run start --prefix ./server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku": "npm run build --prefix ./client && rm -rf ./server/public/* && cp -r ./client/build/* ./server/public/ && cd ./server && git add . && git commit -m \"updating public directory\" && git push heroku master"
   },
   "repository": {
     "type": "git",

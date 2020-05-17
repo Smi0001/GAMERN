@@ -55,11 +55,10 @@ heroku create shammi-meme
 
 ### Deploy on heroku
 1. Create build of client module `npm run build --prefix ./client`
-2. Copy the build directory into server/public `cp -r ./client/build/* ./server/public`
-3. Push changes to heroku `cd ./server && git add . && git commit -m "" && git push heroku master`
-, Procfile containing command to run server/app.js run the server and static: public/index.html `node app.js`
+2. Empty server/public directoru and copy the build directory contents into server/public `rm -rf ./server/public/* && cp -r ./client/build/* ./server/public`
+3. Goto server directory, commit and push changes to heroku `cd ./server && git add . && git commit -m "" && git push heroku master`
 
-Final command from root directory: `npm run build --prefix ./client && rm -r ./server/public/* && cp -r ./client/build/* ./server/public && cd ./server && git add . && git commit -m "updating public directory" && git push heroku master`
+Final command from root directory: `npm run heroku`
 
 ### Watch heroku logs
 `heroku logs --tail --app=shammi-meme`

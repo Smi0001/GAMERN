@@ -38,6 +38,12 @@ yarn
 yarn start
 ```
 
+If using nodemon in dev env:
+```
+nodemon app
+```
+
+
 Dev. can access [GraphiQL UI](http:localhost:4000/graphql) for DB handling at port 4000.
 
 For backend development we can execute `nodemon app` that watches for modifications in backend code and restarts server.

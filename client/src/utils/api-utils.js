@@ -18,7 +18,7 @@ const APIUtils = {
         axios.get(url)
         .then(response => {
             store.dispatch(
-                AppActions.setImageList(response)
+                AppActions.setImageList(response.data)
             )
         })
         .catch(error => console.log(error))

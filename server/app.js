@@ -1,10 +1,12 @@
 const express = require('express')
+const app = express()
 const graphqlHTTP = require('express-graphql')
 const schema = require('./schema/schema')
-const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
-
+require('dotenv').config();
+const bodyParser= require('body-parser')
+const path = require("path")
 // google image search setup
 const GOOGLE_SEARCH_IMAGES = require('image-search-google')
 // cseID https://cse.google.com/cse/setup/basic?cx=004973649819293208902%3Akfq78axqpes
@@ -15,14 +17,16 @@ const GOOGLE = new GOOGLE_SEARCH_IMAGES(CSE_ID, G_API_KEY)
 
 //allow cross-origin requests
 app.use(cors())
+.use(express.static("public"))
+.use(bodyParser.urlencoded({extended: true}))
 
 // Mongoose connection to mLab DB to use MoongoDB
 mongoose.set('useUnifiedTopology', true)
 mongoose.set('useNewUrlParser', true)
-mongoose.connect('mongodb://smi:smi123@ds125526.mlab.com:25526/meme-dialogues')
-mongoose.connection.once('open', () => {
-    console.log('Mongoose connected to mLab')
-})
+mongoose.connect(process.env.MONGODB_MEME_URI
+//    , (err, db) => !err && console.log("We are connected")
+)
+mongoose.connection.once('open', () => console.log('Mongoose connected to mLab'))
 
 
 app
@@ -39,7 +43,6 @@ app
         const searchString = req.query.q
         let optionsObj = req.query.options
         optionsObj = JSON.parse(optionsObj)
-        // optionsObj.page = optionsObj.page > 1 ? optionsObj.page * 10 : optionsObj.page
         const options = optionsObj ? optionsObj : { page:1 }
         console.log('searchString', searchString, options )
         GOOGLE.search(searchString, options).then( response => {
@@ -49,7 +52,15 @@ app
         })
     }
 )
+.use('/static',express.static(path.join(__dirname + '/public/static')))
+.get('/testing', (req, res) => {   
+    res.send({success: true, message: 'URL is active'});
+})
+// .get('*',
+//     function(req, res) {
+//         res.sendFile(path.join(__dirname + '/public/index.html'))
+// })
 
-app.listen(4000, () => {
-    console.log('Express server listening to port 4K')
+.listen(process.env.PORT, () => {
+    console.log(`Express server listening to port ${process.env.PORT}`)
 }) 

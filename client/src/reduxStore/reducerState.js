@@ -59,14 +59,14 @@ const reducerState = (prevState = {}, action) => {
                 searchString,
                 options
             } = prevState
-            // APIUtils.getSearchResults(
-            //     searchString,
-            //     options
-            // )
-            APIUtils.getGoogleResultsFromUI(
+            APIUtils.getSearchResults(
                 searchString,
                 options
             )
+            // APIUtils.getGoogleResultsFromUI(
+            //     searchString,
+            //     options
+            // )
             return {
                 ...prevState,
                 imageList: [],

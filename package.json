@@ -12,5 +12,11 @@
     "url": "git@github.com:Smi0001/GAMERN.git"
   },
   "author": "Smi0001",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "node": "^14.2.0"
+  },
+  "engines": {
+    "node": "^14.2.0"
+  }
 }

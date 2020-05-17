@@ -5,6 +5,8 @@ Full stack implementation of GAMERN (GraphiQL Apollo MongoDB ExpressJS ReactJS N
 ### Download git repo
 `git clone git@github.com:Smi0001/GAMERN.git`
 
+### Run both client & server instantly
+`npm run start` OR `yarn start`
 
 ### Run UI server
 Using npm
@@ -38,9 +40,9 @@ yarn
 yarn start
 ```
 
-If using nodemon in dev env:
+### If using nodemon in dev env for API:
 ```
-nodemon app
+nodemon app.js
 ```
 
 

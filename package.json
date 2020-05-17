@@ -4,7 +4,7 @@
   "description": "Full stack implementation of GAMERN (GraphiQL Apollo MongoDB ExpressJS ReactJS NodeJS)",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build --prefix ./client && cp -r ./client/build ./server/public",
+    "start": "npm run build --prefix ./client && cp -r ./client/build/* ./server/public/",
     "dev": "npm run start --prefix ./client && npm run start --prefix ./server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
